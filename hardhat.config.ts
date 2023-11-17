@@ -7,12 +7,11 @@ import { resolve } from 'path';
 dotenvConfig({ path: resolve(__dirname, './.env') });
 
 function getNetworks(): NetworksUserConfig {
-  if (process.env.ALCHEMY_API_KEY && process.env.PAYMASTERSIGNER_PRIVATE_KEY) {
-      const alchemyApiKey = process.env.ALCHEMY_API_KEY
-      const accounts = [`0x${process.env.PAYMASTERSIGNER_PRIVATE_KEY}`]
+  if (process.env.ALCHEMY_API_KEY && process.env.PRIVATE_KEY) {
+      const accounts = [`0x${process.env.PRIVATE_KEY}`]
       return {
           goerli: {
-              url: `${process.env.ETHEREUM_URL}`,
+              url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
               chainId: 5,
               accounts
           },
@@ -22,7 +21,7 @@ function getNetworks(): NetworksUserConfig {
               accounts
           },
           polygon: {
-              url: `https://polygon-mumbai.g.alchemy.com/v2/${alchemyApiKey}`,
+              url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
               chainId: 80001,
               accounts
           },
