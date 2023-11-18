@@ -24,11 +24,11 @@ async function main() {
   
   console.log(`PasskeyZkAccountFactory contract address: ${await passkeyZkAccountFactory.getAddress()} \n`)
 
-  const passkeyId = ethers.encodeBytes32String("passkey1")
+  const passkeyId = "passkeyCredentialId"
   const pubKeyX = "58640826831948292943175879036424064544903064261202148179375876287662359819382"
   const pubKeyY = "35488965690999393053537793469671322029993511314321148723800137444087697436355"
 
-  const deployerSCWAddress = await passkeyZkAccountFactory.getCounterfactualAddress(passkeyId,pubKeyX,pubKeyY,0)
+  const deployerSCWAddress = await passkeyZkAccountFactory.getCounterfactualAddress(pubKeyX,pubKeyY,0,passkeyId)
   console.log(`Deployer SCW address: ${deployerSCWAddress}`)
   
   

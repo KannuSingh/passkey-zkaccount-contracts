@@ -3,9 +3,9 @@ pragma solidity ^0.8.12;
 
 interface IPasskeyAccount {
     struct Passkey {
-        bytes32 id;
         uint256 pubKeyX;
         uint256 pubKeyY;
+        bytes credentialId;
     }
 
     struct PasskeySigData {

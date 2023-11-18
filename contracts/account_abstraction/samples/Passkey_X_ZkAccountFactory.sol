@@ -32,12 +32,17 @@ contract PasskeyZkAccountFactory {
      * This method returns an existing account address so that entryPoint.getSenderAddress() would work even after account creation
      */
     function createAccount(
-        bytes32 id,
         uint256 pubKeyX,
         uint256 pubKeyY,
-        uint salt
+        uint salt,
+        bytes calldata credentialId
     ) public returns (PasskeyZkAccount ret) {
-        address addr = getCounterfactualAddress(id, pubKeyX, pubKeyY, salt);
+        address addr = getCounterfactualAddress(
+            pubKeyX,
+            pubKeyY,
+            salt,
+            credentialId
+        );
         uint codeSize = addr.code.length;
         if (codeSize > 0) {
             return PasskeyZkAccount(payable(addr));
@@ -48,7 +53,7 @@ contract PasskeyZkAccountFactory {
                     address(accountImplementation),
                     abi.encodeCall(
                         PasskeyZkAccount.initialize,
-                        (id, pubKeyX, pubKeyY)
+                        (pubKeyX, pubKeyY, credentialId)
                     )
                 )
             )
@@ -59,10 +64,10 @@ contract PasskeyZkAccountFactory {
      * calculate the counterfactual address of this account as it would be returned by createAccount()
      */
     function getCounterfactualAddress(
-        bytes32 id,
         uint256 pubKeyX,
         uint256 pubKeyY,
-        uint salt
+        uint salt,
+        bytes calldata credentialId
     ) public view returns (address) {
         return
             Create2.computeAddress(
@@ -74,7 +79,7 @@ contract PasskeyZkAccountFactory {
                             address(accountImplementation),
                             abi.encodeCall(
                                 PasskeyZkAccount.initialize,
-                                (id, pubKeyX, pubKeyY)
+                                (pubKeyX, pubKeyY, credentialId)
                             )
                         )
                     )

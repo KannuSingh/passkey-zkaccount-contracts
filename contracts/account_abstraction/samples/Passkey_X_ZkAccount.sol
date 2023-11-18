@@ -163,19 +163,19 @@ contract PasskeyZkAccount is
      * the implementation by calling `upgradeTo()`
      */
     function initialize(
-        bytes32 id,
         uint256 pubKeyX,
-        uint256 pubKeyY
+        uint256 pubKeyY,
+        bytes calldata credentialId
     ) public virtual initializer {
-        _initialize(id, pubKeyX, pubKeyY);
+        _initialize(pubKeyX, pubKeyY, credentialId);
     }
 
     function _initialize(
-        bytes32 id,
         uint256 pubKeyX,
-        uint256 pubKeyY
+        uint256 pubKeyY,
+        bytes calldata credentialId
     ) internal virtual {
-        _signer = Passkey(id, pubKeyX, pubKeyY);
+        _signer = Passkey(pubKeyX, pubKeyY, credentialId);
         emit PasskeyZkAccountInitialized(_entryPoint, _signer);
     }
 
