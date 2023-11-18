@@ -24,7 +24,7 @@ async function main() {
   
   console.log(`PasskeyZkAccountFactory contract address: ${await passkeyZkAccountFactory.getAddress()} \n`)
 
-  const passkeyId = "passkeyCredentialId"
+  const passkeyId = ethers.toUtf8Bytes("passkeyCredentialId")
   const pubKeyX = "58640826831948292943175879036424064544903064261202148179375876287662359819382"
   const pubKeyY = "35488965690999393053537793469671322029993511314321148723800137444087697436355"
 
